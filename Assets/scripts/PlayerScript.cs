@@ -35,17 +35,23 @@ public class PlayerScript : MonoBehaviour {
     {
         if (Input.GetButtonDown("Jump"))
         {
-            if (boo)
+            if (reloaded)
             {
-                Debug.Log("shooting");
+                //Jo man soll nicht wie ein affe schießen dürfen
                 StartCoroutine(Reloading(0.2f));
+
+                //Finde den Standpunkt des Corgis heraus und speichere ihn
                 Vector2 thisOne = this.transform.position;
+                //Füge einen abstand hinzu
+                thisOne.x = thisOne.x + 1;
+                //Erstelle an dieser Position einen Pew Pew
                 Instantiate(bullet, thisOne, Quaternion.identity);
 
             }
 
         }
     }
+
     //Reloading the Pew Pew
     IEnumerator Reloading(float time)
     {
@@ -53,4 +59,5 @@ public class PlayerScript : MonoBehaviour {
         yield return new WaitForSeconds(time);
         reloaded = true;
     }
+
 }

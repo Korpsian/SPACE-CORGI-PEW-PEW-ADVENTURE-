@@ -5,20 +5,30 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour {
     public float speed = 0; 
 
+    //Jo lass da wird für Animationen gebraucht boiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
     void Start()
     {
-        Debug.Log("I am alive");
+
     }
 
+    //Das Macht das "Pew" in Pew Pew
     void Update()
     {
         transform.Translate(Vector3.right * Time.deltaTime * speed);
         transform.Translate(Vector3.right * Time.deltaTime, Space.World);
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    //Jo wenn Trigger Happy dann machsch alles kaputt junge
+    void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(coll);
-        Debug.Log("Hit");
+        if(other.tag == "BadGuy")
+        {
+            //Ansonsten kommt noch ein Script auf die Baddies drauf wodurch man eine Methode aufruft
+            //Die dann HP abzieht
+
+            Debug.Log("Pussy Destroyer");
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
     }
 }
