@@ -8,12 +8,29 @@ public class PlayerScript : MonoBehaviour {
     public float horizontalSpeed = 0;
     public float verticalSpeed = 0;
     bool reloaded = true;
-    
-    bool movingUp = true;
-    bool movingDown = true;
+
+    bool moveUp = true;
+    bool moveDown = true;
+    int movementVertical = 0;
 
     void FixedUpdate()
     {
+        //Bewegung Oben
+        if(Input.GetAxis("Vertical") < 0)
+        {
+            movementVertical = 1;
+        } 
+        //Unten
+        else if(Input.GetAxis("Vertical") > 0)
+        {
+            movementVertical = -1;
+        } else
+        {
+            movementVertical = 0;
+            moveUp = true;
+            moveDown = true;
+        }
+
         Movement();
         Shoot(); 
         
@@ -21,27 +38,27 @@ public class PlayerScript : MonoBehaviour {
 
     void Movement()
     {
-        //Bewegung nach Oben
-        if (movingDown)
+
+        //Bewegung nach Unten
+        if(moveDown)
         {
-            if (Input.GetAxis("Vertical") < 0)
+            if (movementVertical == 1)
             {
                 transform.Translate(Vector3.down * Time.deltaTime * verticalSpeed);
             }
-        }
+        } 
 
-        //Bewegung nach Unten
-        if (movingUp)
+        //Bewegung nach Oben
+        if(moveUp)
         {
-            if (Input.GetAxis("Vertical") > 0)
+            if (movementVertical == -1)
             {
                 transform.Translate(Vector3.down * Time.deltaTime * -verticalSpeed);
 
             }
-
         }
-
     }
+    
     void Shoot()
     {
         if (Input.GetButtonDown("Jump"))
@@ -65,14 +82,19 @@ public class PlayerScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("hit");
 
         if (col.name == "BarriereUp")
         {
             Debug.Log("Oben");
-            movingUp = false;
+            movementVertical = 0;
+            moveUp = false;
         }
         
+        if(col.name == "BarriereDown")
+        {
+            movementVertical = 0;
+            moveDown = false;
+        }
     }
 
     //Nachladen des Pew Pew
