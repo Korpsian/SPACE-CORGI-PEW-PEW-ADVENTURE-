@@ -7,7 +7,7 @@ public class LoadUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        SceneManager.LoadScene("UI-Interface", LoadSceneMode.Additive);
 	}
 	
 }
