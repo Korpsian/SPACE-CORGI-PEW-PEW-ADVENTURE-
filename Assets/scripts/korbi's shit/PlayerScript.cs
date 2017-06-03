@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour {
     void FixedUpdate()
     {
         Movement();
-        Shoot();
+        Shoot(); 
         
     }
 
@@ -27,7 +27,6 @@ public class PlayerScript : MonoBehaviour {
             if (Input.GetAxis("Vertical") < 0)
             {
                 transform.Translate(Vector3.down * Time.deltaTime * verticalSpeed);
-                transform.Translate(Vector3.down * Time.deltaTime, Space.World);
             }
         }
 
@@ -37,7 +36,7 @@ public class PlayerScript : MonoBehaviour {
             if (Input.GetAxis("Vertical") > 0)
             {
                 transform.Translate(Vector3.down * Time.deltaTime * -verticalSpeed);
-                transform.Translate(Vector3.down * Time.deltaTime, Space.World);
+
             }
 
         }
@@ -73,6 +72,7 @@ public class PlayerScript : MonoBehaviour {
             Debug.Log("Oben");
             movingUp = false;
         }
+        
     }
 
     //Nachladen des Pew Pew

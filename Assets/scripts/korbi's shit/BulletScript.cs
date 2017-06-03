@@ -8,7 +8,7 @@ public class BulletScript : MonoBehaviour {
     //Jo lass da wird für Animationen gebraucht boiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
     void Start()
     {
-
+        DestroyOverTime();
     }
 
     //Das Macht das "Pew" in Pew Pew
@@ -31,4 +31,11 @@ public class BulletScript : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+    IEnumerator DestroyOverTime()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+    }
+
 }
