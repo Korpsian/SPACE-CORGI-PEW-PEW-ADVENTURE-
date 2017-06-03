@@ -3,30 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour {
-
+    
     public GameObject bullet;
     public float horizontalSpeed = 0;
     public float verticalSpeed = 0;
     bool reloaded = true;
+    
+    bool movingUp = true;
+    bool movingDown = true;
 
     void FixedUpdate()
     {
         Movement();
         Shoot();
+        
     }
 
     void Movement()
     {
-        if(Input.GetAxis("Vertical") < 0 )
+        //Bewegung nach Oben
+        if (movingDown)
         {
-            transform.Translate(Vector3.down * Time.deltaTime * verticalSpeed);
-            transform.Translate(Vector3.down * Time.deltaTime, Space.World);
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                transform.Translate(Vector3.down * Time.deltaTime * verticalSpeed);
+                transform.Translate(Vector3.down * Time.deltaTime, Space.World);
+            }
         }
 
-        if (Input.GetAxis("Vertical") > 0)
+        //Bewegung nach Unten
+        if (movingUp)
         {
-            transform.Translate(Vector3.down * Time.deltaTime * -verticalSpeed);
-            transform.Translate(Vector3.down * Time.deltaTime, Space.World);
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                transform.Translate(Vector3.down * Time.deltaTime * -verticalSpeed);
+                transform.Translate(Vector3.down * Time.deltaTime, Space.World);
+            }
 
         }
 
@@ -52,7 +64,18 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
-    //Reloading the Pew Pew
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("hit");
+
+        if (col.name == "BarriereUp")
+        {
+            Debug.Log("Oben");
+            movingUp = false;
+        }
+    }
+
+    //Nachladen des Pew Pew
     IEnumerator Reloading(float time)
     {
         reloaded = false;
