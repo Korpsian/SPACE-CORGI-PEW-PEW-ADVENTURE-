@@ -15,7 +15,6 @@ public class BulletScript : MonoBehaviour {
     void Update()
     {
         transform.Translate(Vector3.right * Time.deltaTime * speed);
-        transform.Translate(Vector3.right * Time.deltaTime, Space.World);
     }
 
     //Jo wenn Trigger Happy dann machsch alles kaputt junge
@@ -30,11 +29,18 @@ public class BulletScript : MonoBehaviour {
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
+
+        if (other.tag == "Player")
+        {
+        } else {
+            Destroy(gameObject);
+        }
+
     }
 
     IEnumerator DestroyOverTime()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 
