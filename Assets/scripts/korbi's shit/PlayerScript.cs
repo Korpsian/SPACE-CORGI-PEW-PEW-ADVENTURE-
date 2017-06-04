@@ -147,7 +147,7 @@ public class PlayerScript : MonoBehaviour {
             movementHorizontal = 0;
             moveLeft = false;
         }
-
+        
     }
 
     //Nachladen des Pew Pew
