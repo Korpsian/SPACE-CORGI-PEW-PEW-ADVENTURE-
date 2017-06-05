@@ -18,6 +18,12 @@ public class PlayerScript : MonoBehaviour {
     int movementVertical = 0;
     int movementHorizontal = 0;
 
+    public Animator bulletAnim;
+    private void Start()
+    {
+        bulletAnim = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
+    }
+
     void FixedUpdate()
     {
         //Bewegung Unten
@@ -111,16 +117,20 @@ public class PlayerScript : MonoBehaviour {
                 //Finde den Standpunkt des Corgis heraus und speichere ihn
                 Vector2 thisOne = this.transform.position;
                 //Füge einen abstand hinzu
-                thisOne.x = thisOne.x + 1;
+                thisOne.x = thisOne.x + 2;
+
+                bulletAnim.Play("create_beam");
                 //Erstelle an dieser Position einen Pew Pew
                 Instantiate(bullet, thisOne, Quaternion.identity);
-
-            }
-
+            } 
+        }
+        else
+        {
+            bulletAnim.Play("Start");
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
 
         if (col.name == "BarriereUp")
