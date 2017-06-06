@@ -7,6 +7,7 @@ using Pathfinding;
 [RequireComponent (typeof (Seeker))]
 public class EnemyAI : MonoBehaviour {
 
+    
     public Transform target;
 
     //wie oft in einer sekunde geupdatet wird
@@ -27,4 +28,28 @@ public class EnemyAI : MonoBehaviour {
 
     //max distanz von KI zu anderem wegpunkt
     public float nextWaypointDistance = 3;
+
+    //aktueller ausgesuchter Wegpunkt
+    private int currentWaypoint = 0;
+
+    void Start()
+    {
+        seeker = GetComponent<Seeker>();
+        rb = GetComponent<Rigidbody2D>();
+
+        if (target == null)
+        {
+            Debug.LogError("Spieler nicht gefunden!!");
+            return;
+        }
+
+        seeker.StartPath(transform.position, target.position, OnPathComplete);
+
+    }
+
+    public void OnPathComplete (Path p)
+    {
+        Debug.Log("Pfad gefunden. Pfad fehlerhaft?" + p.error);
+        return;
+    }
 }
