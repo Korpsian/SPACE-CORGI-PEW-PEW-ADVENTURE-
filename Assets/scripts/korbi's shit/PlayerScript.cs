@@ -18,10 +18,12 @@ public class PlayerScript : MonoBehaviour {
     int movementVertical = 0;
     int movementHorizontal = 0;
 
-    public Animator bulletAnim;
+    Animator bulletAnim;
+    Animator playerAnim;
     private void Start()
     {
         bulletAnim = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
+        playerAnim = gameObject.GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -67,7 +69,6 @@ public class PlayerScript : MonoBehaviour {
 
     void Movement()
     {
-
         //Bewegung nach Unten
         if(moveDown)
         {
@@ -90,7 +91,19 @@ public class PlayerScript : MonoBehaviour {
         {
             if(movementHorizontal == 1)
             {
+                if (Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    playerAnim.SetBool("right", true);
+                    playerAnim.Play("Corgi_nachVorne1");
+
+                }
+
                 transform.Translate(Vector3.right * Time.deltaTime * horizontalSpeed / 2f);
+            }
+            else
+            {
+                playerAnim.SetBool("right", false);
+
             }
         }
 
