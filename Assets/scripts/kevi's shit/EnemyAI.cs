@@ -43,13 +43,76 @@ public class EnemyAI : MonoBehaviour {
             return;
         }
 
+        // Startet neuen pfad zum Ziel, gibt ergebnis zurück für onpathcomplete methode
         seeker.StartPath(transform.position, target.position, OnPathComplete);
 
+        StartCoroutine (UpdatePath ());
+
+    }
+
+    IEnumerator UpdatePath()
+    {
+        if (target == null)
+        {
+            //TODO: Insert a player search here. 
+            yield return false;
+        }
+
+        // Startet neuen pfad zum Ziel, gibt ergebnis zurück für onpathcomplete methode
+        seeker.StartPath(transform.position, target.position, OnPathComplete);
+
+        yield return new WaitForSeconds(1f / updateRate);
+        StartCoroutine(UpdatePath());
     }
 
     public void OnPathComplete (Path p)
     {
         Debug.Log("Pfad gefunden. Pfad fehlerhaft?" + p.error);
-        return;
+        if (!p.error)
+        {
+            path = p;
+            currentWaypoint = 0;
+        }
     }
+
+    void FixedUpdate ()
+    {
+        if (target == null)
+        {
+            //TODO: Insert a player search here. 
+            return;
+        }
+        //TODO: Always look at player?
+
+        if (path == null)
+             return;
+        if (currentWaypoint >= path.vectorPath.Count)
+        {
+            if (pathIsEnded)
+                return;
+
+            Debug.Log("Ende des Pfades erreicht?");
+            pathIsEnded = true;
+            return;
+        }
+        pathIsEnded = false;
+
+        //weg zum nächsten wegpunkt
+        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+        dir *= speed * Time.fixedDeltaTime;
+
+        //KI Bewegung
+
+        rb.AddForce(dir, fMode);
+
+        float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+        if (dist < nextWaypointDistance)
+        {
+            currentWaypoint++;
+            return;
+        }
+        
+
+    }
+
 }
