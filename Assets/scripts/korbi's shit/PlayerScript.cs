@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour {
     
+    //Bullet die Verschossen wird
     public GameObject bullet;
     public float horizontalSpeed = 0;
     public float verticalSpeed = 0;
     public float shootSpeed = 0;
-    bool reloaded = true;
 
+    public int lifes = 3;
+    public int health = 5;
+
+    bool reloaded = true;
     bool moveUp = true;
     bool moveDown = true;
     bool moveRight = true;
@@ -91,17 +95,12 @@ public class PlayerScript : MonoBehaviour {
         {
             if(movementHorizontal == 1)
             {
-                if (Input.GetAxisRaw("Horizontal") > 0)
-                {
-                    playerAnim.SetBool("right", true);
-                    playerAnim.Play("Corgi_nachVorne1");
-
-                }
-
+                playerAnim.SetBool("right", true);
                 transform.Translate(Vector3.right * Time.deltaTime * horizontalSpeed / 2f);
             }
             else
             {
+                playerAnim.Play("Corgi_Idle");
                 playerAnim.SetBool("right", false);
 
             }
@@ -112,7 +111,13 @@ public class PlayerScript : MonoBehaviour {
         {
             if (movementHorizontal == -1)
             {
+                playerAnim.SetBool("left", true);
                 transform.Translate(Vector3.right * Time.deltaTime * -horizontalSpeed);
+            }
+            else
+            {
+                playerAnim.SetBool("left", false);
+
             }
         }
 
@@ -127,10 +132,9 @@ public class PlayerScript : MonoBehaviour {
                 //Jo man soll nicht wie ein affe schießen dürfen
                 StartCoroutine(Reloading(shootSpeed));
 
-                //Finde den Standpunkt des Corgis heraus und speichere ihn
-                Vector2 thisOne = this.transform.position;
-                //Füge einen abstand hinzu
-                thisOne.x = thisOne.x + 2;
+                //Finde den Standpunkt des Child Objektes und verwende ihn
+                Vector2 thisOne = this.transform.GetChild(0).transform.position;
+
 
                 bulletAnim.Play("create_beam");
                 //Erstelle an dieser Position einen Pew Pew
