@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LifeManager : MonoBehaviour {
 
     public GameObject hundeKekse;
+    public GameObject hundeKekseHallow;
     public GameObject gridSystem;
     public GameObject leftLifeObj;
     public GameObject thePlayer;
@@ -66,7 +67,15 @@ public class LifeManager : MonoBehaviour {
             GameObject temp = GameObject.Find("Hundekeks(Clone)");
             temp.name = "Hundekeks" + i;
             temp.transform.SetParent(gridSystem.transform);
+        }
 
+
+        for(int i = leftHealth; i < 5; i++)
+        {
+                Instantiate(hundeKekseHallow);
+                GameObject temp = GameObject.Find("Hundekeks_hollow(Clone)");
+                temp.name = "Hundekeks" + i + 1;
+                temp.transform.SetParent(gridSystem.transform);
         }
     }
 

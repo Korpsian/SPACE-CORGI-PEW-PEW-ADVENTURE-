@@ -12,7 +12,6 @@ public class ScoreManager : MonoBehaviour {
     private void Start()
     {
         StartCoroutine(UpdScoreVisual(0f));
-        AddScore(1000);
     }
 
     //Das sind die extra punkte die dazu kommen sollen, können auch negativ sein fürs abziehen

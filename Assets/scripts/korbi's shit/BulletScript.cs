@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour {
-    public float speed = 0; 
+    public float speed = 0;
+    public int damage = 1;
 
     //Jo lass da wird für Animationen gebraucht boiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
     void Start()
@@ -24,15 +25,15 @@ public class BulletScript : MonoBehaviour {
         {
             //Ansonsten kommt noch ein Script auf die Baddies drauf wodurch man eine Methode aufruft
             //Die dann HP abzieht
-
-            Debug.Log("Pussy Destroyer");
-            Destroy(other.gameObject);
-            Destroy(gameObject);
+            other.GetComponent<EnemieLifeManager>().DecreaseLife(damage);
         }
 
         if (other.tag == "Player")
         {
-        } else {
+
+        }
+        else
+        {
             Destroy(gameObject);
         }
 

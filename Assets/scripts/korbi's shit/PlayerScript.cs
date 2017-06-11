@@ -177,6 +177,14 @@ public class PlayerScript : MonoBehaviour {
         
     }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.tag == "BadGuy")
+        {
+            health--;
+        }
+    }
+
     //Nachladen des Pew Pew
     IEnumerator Reloading(float time)
     {
