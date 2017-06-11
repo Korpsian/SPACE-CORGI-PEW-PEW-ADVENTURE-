@@ -25,7 +25,7 @@ public class BulletScript : MonoBehaviour {
         {
             //Ansonsten kommt noch ein Script auf die Baddies drauf wodurch man eine Methode aufruft
             //Die dann HP abzieht
-            other.GetComponent<EnemieLifeManager>().DecreaseLife(damage);
+            other.GetComponent<EnemyLifeManager>().DecreaseLife(damage);
         }
 
         if (other.tag == "Player")
