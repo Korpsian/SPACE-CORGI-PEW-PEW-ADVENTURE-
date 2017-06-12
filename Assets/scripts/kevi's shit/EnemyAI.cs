@@ -32,6 +32,8 @@ public class EnemyAI : MonoBehaviour {
     //aktueller ausgesuchter Wegpunkt
     private int currentWaypoint = 0;
 
+    private bool searchingForPlayer = false;
+
     void Start()
     {
         seeker = GetComponent<Seeker>();
@@ -39,7 +41,11 @@ public class EnemyAI : MonoBehaviour {
 
         if (target == null)
         {
-            Debug.LogError("Spieler nicht gefunden!!");
+            if (!searchingForPlayer)
+            {
+                searchingForPlayer = true;
+                StartCoroutine(SearchForPlayer());
+            }
             return;
         }
 
@@ -50,11 +56,31 @@ public class EnemyAI : MonoBehaviour {
 
     }
 
+    IEnumerator SearchForPlayer()
+    {
+       GameObject search = GameObject.FindGameObjectWithTag ("Player");
+       if (search == null)
+        {
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(SearchForPlayer());
+        }
+       else
+        {
+            target = search.transform;
+            searchingForPlayer = false;
+            StartCoroutine(UpdatePath());
+            yield return false;
+        }
+    }
     IEnumerator UpdatePath()
     {
         if (target == null)
         {
-            //TODO: Insert a player search here. 
+            if (!searchingForPlayer)
+            {
+                searchingForPlayer = true;
+                StartCoroutine(SearchForPlayer());
+            }
             yield return false;
         }
 
@@ -79,7 +105,11 @@ public class EnemyAI : MonoBehaviour {
     {
         if (target == null)
         {
-            //TODO: Insert a player search here. 
+            if (!searchingForPlayer)
+            {
+                searchingForPlayer = true;
+                StartCoroutine(SearchForPlayer());
+            }
             return;
         }
         //TODO: Always look at player?
