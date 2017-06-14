@@ -37,6 +37,7 @@ public class PlayerScript : MonoBehaviour {
     {
         Movement();
         Shoot();
+        MaxHealth();
     }
 
     void Movement()
@@ -147,6 +148,18 @@ public class PlayerScript : MonoBehaviour {
             bulletAnim.Play("Start");
         }
     }
+    void MaxHealth()
+    {
+        if(health <= 0)
+        {
+            lifes--;
+            health = 5;
+        }
+        if(health >= 5)
+        {
+            health = 5;
+        }
+    }
 
     //Bei Berührung der Barrieren, bewegung deaktivieren für die jeweilige richtung
     void OnTriggerStay2D(Collider2D col)
@@ -222,7 +235,6 @@ public class PlayerScript : MonoBehaviour {
         }
 
     }
-
     //Nachladen des Pew Pew
     IEnumerator Reloading(float time)
     {
