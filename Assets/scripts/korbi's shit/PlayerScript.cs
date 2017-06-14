@@ -186,6 +186,7 @@ public class PlayerScript : MonoBehaviour {
         {
             health--;
             StartCoroutine(TempInvisible());
+            
         }
     }
 

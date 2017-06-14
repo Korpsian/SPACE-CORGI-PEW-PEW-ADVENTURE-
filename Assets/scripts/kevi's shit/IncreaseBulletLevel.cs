@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class IncreaseBulletLevel : MonoBehaviour {
     
-    void OnTriggerEnter2d (Collider2D col)
+    void OnTriggerEnter2D (Collider2D col)
     {
         if (col.tag == "Player")
         {
-            col.gameObject.GetComponent<PlayerScript>().bulletLvl ++;
+            var player = col.gameObject.GetComponent<PlayerScript>();
+            player.bulletLvl = player.bulletLvl + 1;
+            Destroy(gameObject);
         }
     }
 }
