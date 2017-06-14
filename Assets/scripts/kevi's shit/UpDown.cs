@@ -5,7 +5,6 @@ using UnityEngine;
 public class UpDown : MonoBehaviour
 {
 
-    public GameObject bossbullet;
     bool moveUp = true;
     bool moveDown = true;
     public float s = 10f;
