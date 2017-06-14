@@ -6,14 +6,14 @@ public class CameraMovement : MonoBehaviour {
 
     public float speed;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
 	// Update is called once per frame
 	void Update () {
         transform.Translate(Vector3.right * Time.deltaTime * speed);
+    }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "BarriereEnd") ;
+        speed = 0;
     }
 }
