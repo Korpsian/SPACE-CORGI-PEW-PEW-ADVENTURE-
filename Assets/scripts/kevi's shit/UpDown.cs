@@ -6,13 +6,11 @@ public class UpDown : MonoBehaviour
 {
 
     public GameObject bossbullet;
-    public float s = 10f;
-    public float up = 3f;
-    public float down = -3f;
     bool moveUp = true;
     bool moveDown = true;
+    public float s = 0.5f;
 
-    public int dir = 1;
+    int dir = 1;
 
     //Place Animator
 
