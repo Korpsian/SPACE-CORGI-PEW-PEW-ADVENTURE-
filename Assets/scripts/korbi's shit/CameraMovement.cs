@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "BarriereEnd") ;
+        if (col.name == "BarriereEnd") ;
         speed = 0;
     }
 }
