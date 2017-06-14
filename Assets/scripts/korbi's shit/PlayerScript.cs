@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour {
     
     //Bullet die Verschossen wird
-    public GameObject bullet;
     public float horizontalSpeed = 0;
     public float verticalSpeed = 0;
     public float shootSpeed = 0;

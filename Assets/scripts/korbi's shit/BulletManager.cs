@@ -24,11 +24,12 @@ public class BulletManager : MonoBehaviour {
                 pos.y = pos.y + 2;
                 Instantiate(bullet, pos, Quaternion.identity);
                 break;
+            case 3:
+
+                break;
             default:
                 break;
         }
-
-        Instantiate(bullet, transform.position, Quaternion.identity);
 
     }
 
