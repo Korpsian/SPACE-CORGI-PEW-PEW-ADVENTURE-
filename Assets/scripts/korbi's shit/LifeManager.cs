@@ -44,6 +44,11 @@ public class LifeManager : MonoBehaviour {
             UpdLifes();
         }
 
+        if(player.lifes == 0)
+        {
+            StartGameOver();
+        }
+
 	}
 
     void UpdHealth()
@@ -90,5 +95,14 @@ public class LifeManager : MonoBehaviour {
         {
             temp.text = "0" + leftLifes;
         }
+    }
+
+    void StartGameOver()
+    {
+        var player = thePlayer.GetComponent<PlayerScript>();
+
+        player.allowMoving = false;
+        GameObject GameOverMenu = GameObject.Find("GameOverMenu");
+        GameOverMenu.GetComponent<CanvasGroup>().alpha = 1f;
     }
 }

@@ -62,3 +62,4 @@ $RECYCLE.BIN/
 !*.*.meta
 
 # End of https://www.gitignore.io/api/unity,windows
+Assets/scenes/level1-1.unity

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
     
@@ -12,18 +13,21 @@ public class PlayerScript : MonoBehaviour {
 
     public int lifes = 3;
     public int health = 5;
+    public int bulletLvl = 1;
 
     bool reloaded = true;
     bool moveUp = true;
     bool moveDown = true;
     bool moveRight = true;
     bool moveLeft = true;
+    public bool allowMoving = true;
 
     int movementVertical = 0;
     int movementHorizontal = 0;
 
     Animator bulletAnim;
     Animator playerAnim;
+
     private void Start()
     {
         bulletAnim = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
@@ -34,46 +38,47 @@ public class PlayerScript : MonoBehaviour {
     {
         Movement();
         Shoot();
-
     }
 
     void Movement()
     {
-        //Bewegung Unten
-        if (Input.GetAxisRaw("Vertical") < 0)
+        if (allowMoving)
         {
-            movementVertical = 1;
-        }
-        //Oben
-        else if (Input.GetAxisRaw("Vertical") > 0)
-        {
-            movementVertical = -1;
-        }
-        else
-        {
-            movementVertical = 0;
-            moveUp = true;
-            moveDown = true;
-        }
+            //Bewegung Unten
+            if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                movementVertical = 1;
+            }
+            //Oben
+            else if (Input.GetAxisRaw("Vertical") > 0)
+            {
+                movementVertical = -1;
+            }
+            else
+            {
+                movementVertical = 0;
+                moveUp = true;
+                moveDown = true;
+            }
 
-        //Rechts
-        if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            Debug.Log("Rechts");
-            movementHorizontal = 1;
+            //Rechts
+            if (Input.GetAxisRaw("Horizontal") > 0)
+            {
+                Debug.Log("Rechts");
+                movementHorizontal = 1;
+            }
+            else if (Input.GetAxisRaw("Horizontal") < 0)
+            {
+                Debug.Log("Links");
+                movementHorizontal = -1;
+            }
+            else
+            {
+                movementHorizontal = 0;
+                moveRight = true;
+                moveLeft = true;
+            }
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0)
-        {
-            Debug.Log("Links");
-            movementHorizontal = -1;
-        }
-        else
-        {
-            movementHorizontal = 0;
-            moveRight = true;
-            moveLeft = true;
-        }
-
 
         //Bewegung nach Unten
         if (moveDown)
@@ -133,13 +138,9 @@ public class PlayerScript : MonoBehaviour {
                 //Jo man soll nicht wie ein affe schießen dürfen
                 StartCoroutine(Reloading(shootSpeed));
 
-                //Finde den Standpunkt des Child Objektes und verwende ihn
-                Vector2 thisOne = this.transform.GetChild(0).transform.position;
-
-
                 bulletAnim.Play("create_beam");
                 //Erstelle an dieser Position einen Pew Pew
-                Instantiate(bullet, thisOne, Quaternion.identity);
+                gameObject.GetComponent<BulletManager>().InstantiateBullet(bulletLvl);
             } 
         }
         else
@@ -148,6 +149,7 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    //Bei Berührung der Barrieren, bewegung deaktivieren für die jeweilige richtung
     void OnTriggerStay2D(Collider2D col)
     {
 
@@ -178,7 +180,8 @@ public class PlayerScript : MonoBehaviour {
         
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    //Bei Berührung mit einem Gegner bzw. Hinterniss, ziehe ein leben ab
+    void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "BadGuy")
         {
