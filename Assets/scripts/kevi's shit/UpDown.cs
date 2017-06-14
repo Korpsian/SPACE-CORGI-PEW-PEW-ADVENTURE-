@@ -8,7 +8,8 @@ public class UpDown : MonoBehaviour
     public GameObject bossbullet;
     bool moveUp = true;
     bool moveDown = true;
-    public float s = 0.5f;
+    public float s = 10f;
+    bool awake = false;
 
     int dir = 1;
 
@@ -24,16 +25,20 @@ public class UpDown : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-        if (!moveUp)
+        if (awake == true)
+        {
+            if (!moveUp)
             {
                 dir = -1;
+                moveUp = true;
             }
-        if (!moveDown)
-        {
-            dir = 1;
+            if (!moveDown)
+            {
+                dir = 1;
+                moveDown = true;
+            }
+            transform.Translate(0, s * dir * Time.deltaTime, 0);
         }
-        transform.Translate(0, s * dir * Time.deltaTime, 0);
     }
     void OnTriggerStay2D(Collider2D col)
     {
@@ -48,6 +53,12 @@ public class UpDown : MonoBehaviour
         {
            moveDown = false;
         }
-
+    }
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.name == "BarriereRight")
+        {
+            awake = true;
+        }
     }
 }
