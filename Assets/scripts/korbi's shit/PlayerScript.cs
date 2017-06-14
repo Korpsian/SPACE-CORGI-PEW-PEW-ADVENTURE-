@@ -32,16 +32,24 @@ public class PlayerScript : MonoBehaviour {
 
     void FixedUpdate()
     {
+        Movement();
+        Shoot();
+
+    }
+
+    void Movement()
+    {
         //Bewegung Unten
-        if(Input.GetAxisRaw("Vertical") < 0)
+        if (Input.GetAxisRaw("Vertical") < 0)
         {
             movementVertical = 1;
-        } 
+        }
         //Oben
-        else if(Input.GetAxisRaw("Vertical") > 0)
+        else if (Input.GetAxisRaw("Vertical") > 0)
         {
             movementVertical = -1;
-        } else
+        }
+        else
         {
             movementVertical = 0;
             moveUp = true;
@@ -49,12 +57,12 @@ public class PlayerScript : MonoBehaviour {
         }
 
         //Rechts
-        if(Input.GetAxisRaw("Horizontal") > 0)
+        if (Input.GetAxisRaw("Horizontal") > 0)
         {
             Debug.Log("Rechts");
             movementHorizontal = 1;
         }
-        else if(Input.GetAxisRaw("Horizontal") < 0)
+        else if (Input.GetAxisRaw("Horizontal") < 0)
         {
             Debug.Log("Links");
             movementHorizontal = -1;
@@ -66,15 +74,9 @@ public class PlayerScript : MonoBehaviour {
             moveLeft = true;
         }
 
-        Movement();
-        Shoot(); 
-        
-    }
 
-    void Movement()
-    {
         //Bewegung nach Unten
-        if(moveDown)
+        if (moveDown)
         {
             if (movementVertical == 1)
             {
@@ -122,7 +124,6 @@ public class PlayerScript : MonoBehaviour {
         }
 
     }
-
     void Shoot()
     {
         if (Input.GetButton("Jump"))
@@ -182,7 +183,41 @@ public class PlayerScript : MonoBehaviour {
         if(col.tag == "BadGuy")
         {
             health--;
+            StartCoroutine(TempInvisible());
         }
+    }
+
+    //Kurzzeitige Unbesiegbarkeit 
+    IEnumerator TempInvisible()
+    {
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        StartCoroutine(ToggleSpriteRenderer());
+
+        yield return new WaitForSeconds(2f);
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        yield return new WaitForSeconds(0.2f);
+        if (gameObject.GetComponent<SpriteRenderer>().enabled == false)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        }
+
+    }
+    //Toggelt den Spriterenderer ein und aus
+    IEnumerator ToggleSpriteRenderer()
+    {
+        while (gameObject.GetComponent<BoxCollider2D>().enabled == false)
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (gameObject.GetComponent<SpriteRenderer>().enabled == true)
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            }
+        }
+
     }
 
     //Nachladen des Pew Pew
