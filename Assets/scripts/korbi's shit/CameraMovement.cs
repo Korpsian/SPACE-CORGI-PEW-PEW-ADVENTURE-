@@ -11,9 +11,12 @@ public class CameraMovement : MonoBehaviour {
         transform.Translate(Vector3.right * Time.deltaTime * speed);
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.name == "BarriereEnd") ;
-        speed = 0;
+        Debug.Log("Leck Mich");
+        if (col.name == "BarriereEnd")
+        {
+            speed = 0;
+        }
     }
 }
