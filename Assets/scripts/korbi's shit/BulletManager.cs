@@ -33,9 +33,6 @@ public class BulletManager : MonoBehaviour {
                 pos.y = pos.y + 2;
                 Instantiate(bullet, pos, Quaternion.identity);
                 break;
-            case 4:
-
-                break;
             default:
                 pos = this.transform.GetChild(0).transform.position;
                 Instantiate(bullet, pos, Quaternion.identity);

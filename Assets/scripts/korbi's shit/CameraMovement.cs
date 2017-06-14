@@ -11,12 +11,4 @@ public class CameraMovement : MonoBehaviour {
         transform.Translate(Vector3.right * Time.deltaTime * speed);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        Debug.Log("Leck Mich");
-        if (col.name == "BarriereEnd")
-        {
-            speed = 0;
-        }
-    }
 }
