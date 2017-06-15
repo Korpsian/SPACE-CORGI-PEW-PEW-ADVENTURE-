@@ -6,6 +6,9 @@ public class EnemyLifeManager : MonoBehaviour {
 
     public int hitPoints = 1;
     public int Points = 100;
+    public bool deathAnimation = false;
+    public string deathAnimName;
+    public bool winTheGame = false;
 
     public Color hitColor;
     public int randomMax = 10;
@@ -16,31 +19,57 @@ public class EnemyLifeManager : MonoBehaviour {
     public GameObject item;
     public GameObject health;
 
-	// Update is called once per frame
-	void Update () {
+    Animation anim;
+
+
+    private void Start()
+    {
+        if (deathAnimation)
+        {
+            anim = gameObject.GetComponent<Animation>();
+        }
+    }
+    // Update is called once per frame
+    void Update () {
 		if(hitPoints <= 0)
         {
-            GameObject ScoreManager = GameObject.Find("ScoreManager");
-            ScoreManager.GetComponent<ScoreManager>().AddScore(Points);
-            if (Random.Range(randomMin, randomMax) <= 2)
+            if (deathAnimation)
             {
-                if (Random.Range(grndMin, grndMax) <= 6)
+                StartCoroutine(DeathAnimation());
+                if (winTheGame)
                 {
-                    if(health != null)
-                    {
-                        Instantiate(health, gameObject.transform.position, Quaternion.identity);
-                    }
+                    StartWinGame();
                 }
-                else
-                {
-                    if(item != null)
-                    {
-                        Instantiate(item, gameObject.transform.position, Quaternion.identity);
-                    }
-                }
+
             }
-            
-            Destroy(gameObject);
+            else
+            {
+                if (winTheGame)
+                {
+                    StartWinGame();
+                }
+
+                GameObject ScoreManager = GameObject.Find("ScoreManager");
+                ScoreManager.GetComponent<ScoreManager>().AddScore(Points);
+                if (Random.Range(randomMin, randomMax) <= 2)
+                {
+                    if (Random.Range(grndMin, grndMax) <= 6)
+                    {
+                        if (health != null)
+                        {
+                            Instantiate(health, gameObject.transform.position, Quaternion.identity);
+                        }
+                    }
+                    else
+                    {
+                        if (item != null)
+                        {
+                            Instantiate(item, gameObject.transform.position, Quaternion.identity);
+                        }
+                    }
+                }
+                Destroy(gameObject);
+            }
         }
 	}
 
@@ -49,6 +78,12 @@ public class EnemyLifeManager : MonoBehaviour {
         hitPoints = hitPoints - amount;
         StartCoroutine(GetHit());
     }
+    void StartWinGame()
+    {
+        GameObject GameOverMenu = GameObject.Find("GameOverMenu");
+        GameOverMenu.GetComponent<CanvasGroup>().alpha = 1f;
+
+    }
 
     IEnumerator GetHit()
     {
@@ -56,6 +91,34 @@ public class EnemyLifeManager : MonoBehaviour {
         gameObject.GetComponent<SpriteRenderer>().color = hitColor;
         yield return new WaitForSeconds(0.1f);
         gameObject.GetComponent<SpriteRenderer>().color = temp;
+
+    }
+    IEnumerator DeathAnimation()
+    {
+        GameObject ScoreManager = GameObject.Find("ScoreManager");
+        ScoreManager.GetComponent<ScoreManager>().AddScore(Points);
+        anim.Play(deathAnimName);
+
+        yield return new WaitForSeconds(2f);
+
+        if (Random.Range(randomMin, randomMax) <= 2)
+        {
+            if (Random.Range(grndMin, grndMax) <= 6)
+            {
+                if (health != null)
+                {
+                    Instantiate(health, gameObject.transform.position, Quaternion.identity);
+                }
+            }
+            else
+            {
+                if (item != null)
+                {
+                    Instantiate(item, gameObject.transform.position, Quaternion.identity);
+                }
+            }
+        }
+        Destroy(gameObject);
 
     }
 }
