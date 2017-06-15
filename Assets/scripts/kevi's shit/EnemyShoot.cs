@@ -7,16 +7,10 @@ public class EnemyShoot : MonoBehaviour {
     bool reloaded = true;
     public float shootSpeed = 0;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
 	// Update is called once per frame
 	void FixedUpdate () {
         Shoot();
 	}
-
     void Shoot()
     {
         if (reloaded)

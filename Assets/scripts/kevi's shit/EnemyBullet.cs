@@ -9,15 +9,13 @@ public class EnemyBullet : MonoBehaviour
     
     void Start()
     {
-        
+       
+
     }
 
     void Update()
     {
-        if (awake)
-        {
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
-        }
+        transform.Translate(Vector3.left * Time.deltaTime * speed);
     }
 
     void OnTriggerEnter2D(Collider2D col)
