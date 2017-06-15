@@ -8,6 +8,7 @@ public class EnemyLifeManager : MonoBehaviour {
     public int Points = 100;
     public bool deathAnimation = false;
     public string deathAnimName;
+    public bool winTheGame = false;
 
     public Color hitColor;
     public int randomMax = 10;
@@ -35,9 +36,19 @@ public class EnemyLifeManager : MonoBehaviour {
             if (deathAnimation)
             {
                 StartCoroutine(DeathAnimation());
+                if (winTheGame)
+                {
+                    StartWinGame();
+                }
+
             }
             else
             {
+                if (winTheGame)
+                {
+                    StartWinGame();
+                }
+
                 GameObject ScoreManager = GameObject.Find("ScoreManager");
                 ScoreManager.GetComponent<ScoreManager>().AddScore(Points);
                 if (Random.Range(randomMin, randomMax) <= 2)
@@ -66,6 +77,12 @@ public class EnemyLifeManager : MonoBehaviour {
     {
         hitPoints = hitPoints - amount;
         StartCoroutine(GetHit());
+    }
+    void StartWinGame()
+    {
+        GameObject GameOverMenu = GameObject.Find("GameOverMenu");
+        GameOverMenu.GetComponent<CanvasGroup>().alpha = 1f;
+
     }
 
     IEnumerator GetHit()
