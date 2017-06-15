@@ -20,7 +20,6 @@ public class EnemyBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-<<<<<<< HEAD
         if (col.name == "BarriereRight")
         {
             awake = true;
@@ -33,8 +32,6 @@ public class EnemyBullet : MonoBehaviour
         { 
             Destroy(gameObject);
         }
-=======
->>>>>>> origin/master
-        
+     
     }
 }
