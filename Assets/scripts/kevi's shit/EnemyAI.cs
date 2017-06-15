@@ -144,7 +144,6 @@ public class EnemyAI : MonoBehaviour {
                 return;
             }
         }
-
     }
     void OnTriggerEnter2D(Collider2D col)
     {
