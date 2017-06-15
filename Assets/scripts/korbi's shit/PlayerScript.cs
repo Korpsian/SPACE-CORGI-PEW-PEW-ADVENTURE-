@@ -26,11 +26,14 @@ public class PlayerScript : MonoBehaviour {
 
     Animator bulletAnim;
     Animator playerAnim;
+    AudioSource audio;
+    public AudioClip pew;
 
     private void Start()
     {
         bulletAnim = gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>();
         playerAnim = gameObject.GetComponent<Animator>();
+        audio = gameObject.GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -139,6 +142,7 @@ public class PlayerScript : MonoBehaviour {
                 StartCoroutine(Reloading(shootSpeed));
 
                 bulletAnim.Play("create_beam");
+                audio.PlayOneShot(pew, 0.2f);
                 //Erstelle an dieser Position einen Pew Pew
                 gameObject.GetComponent<BulletManager>().InstantiateBullet(bulletLvl);
             } 
@@ -200,6 +204,12 @@ public class PlayerScript : MonoBehaviour {
             health--;
             StartCoroutine(TempInvisible());
             
+        }
+        if(col.tag == "BadGuyBullet")
+        {
+            health--;
+            StartCoroutine(TempInvisible());
+
         }
     }
 
