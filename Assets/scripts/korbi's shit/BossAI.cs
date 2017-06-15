@@ -13,21 +13,29 @@ public class BossAI : MonoBehaviour {
 	void Update () {
         var bosshp = gameObject.GetComponent<EnemyLifeManager>().hitPoints;
 
-        if(bosshp < 50)
+        if (bosshp < 150)
         {
-            gameObject.GetComponent<EnemyShoot>().shootSpeed = 3;
+            gameObject.GetComponent<EnemyShoot>().shootSpeed = 4;
+            gameObject.GetComponent<UpDown>().s = 10;
+
+        }
+
+
+        if (bosshp < 100)
+        {
+            gameObject.GetComponent<EnemyShoot>().shootSpeed = 6;
             gameObject.GetComponent<UpDown>().s = 15;
+
+        }
+
+        if (bosshp < 50)
+        {
+            gameObject.GetComponent<EnemyShoot>().shootSpeed = 8;
+            gameObject.GetComponent<UpDown>().s = 20;
         } else if(bosshp < 25)
         {
-            GameObject[] test = GameObject.FindGameObjectsWithTag("BadGuyBullet");
-            foreach (GameObject t in test)
-            {
-                Destroy(t);
-            }
-
-
-            gameObject.GetComponent<EnemyShoot>().shootSpeed = 5;
-            gameObject.GetComponent<UpDown>().s = 25;
+            gameObject.GetComponent<EnemyShoot>().shootSpeed = 10;
+            gameObject.GetComponent<UpDown>().s = 30;
         }
     }
 }
