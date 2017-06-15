@@ -29,10 +29,14 @@ public class BulletScript : MonoBehaviour {
             other.GetComponent<EnemyLifeManager>().DecreaseLife(damage);
         }
 
-        if (other.tag == "Player")
+        else if (other.tag == "Player")
+        {
+
+        } else if(other.tag == "BadGuyBullet")
         {
 
         }
+
         else
         {
             Destroy(gameObject);
