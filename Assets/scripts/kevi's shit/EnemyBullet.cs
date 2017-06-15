@@ -9,21 +9,17 @@ public class EnemyBullet : MonoBehaviour
     
     void Start()
     {
-       
-
+        StartCoroutine(DestroyOverTime());
     }
 
     void Update()
     {
-        transform.Translate(Vector3.left * Time.deltaTime * speed);
+       
+            transform.Translate(Vector3.left * Time.deltaTime * speed);
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.name == "BarriereRight")
-        {
-            awake = true;
-        }
         if (col.tag == "Player")
         {
             Destroy(gameObject);
@@ -32,5 +28,10 @@ public class EnemyBullet : MonoBehaviour
         { 
             Destroy(gameObject);
         }
+    }
+    IEnumerator DestroyOverTime()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 }
