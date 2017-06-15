@@ -9,7 +9,8 @@ public class EnemyBulletManager : MonoBehaviour {
     public void InstantiateBullet()
     {
         Vector2 pos;
-        pos = this.transform.GetChild(0).transform.position;
+        //pos = this.transform.GetChild(0).transform.position;
+        pos = this.transform.position;
         Instantiate(EnemyBullet, pos, Quaternion.identity);
     }
 }

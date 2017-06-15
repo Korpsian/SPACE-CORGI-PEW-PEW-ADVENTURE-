@@ -7,7 +7,7 @@ using Pathfinding;
 [RequireComponent (typeof (Seeker))]
 public class EnemyAI : MonoBehaviour {
 
-    
+    bool awake = false;
     public Transform target;
 
     //wie oft in einer sekunde geupdatet wird
@@ -103,46 +103,54 @@ public class EnemyAI : MonoBehaviour {
 
     void FixedUpdate ()
     {
-        if (target == null)
+        if (awake)
         {
-            if (!searchingForPlayer)
+            if (target == null)
             {
-                searchingForPlayer = true;
-                StartCoroutine(SearchForPlayer());
-            }
-            return;
-        }
-        //TODO: Always look at player?
-
-        if (path == null)
-             return;
-        if (currentWaypoint >= path.vectorPath.Count)
-        {
-            if (pathIsEnded)
+                if (!searchingForPlayer)
+                {
+                    searchingForPlayer = true;
+                    StartCoroutine(SearchForPlayer());
+                }
                 return;
+            }
+            //TODO: Always look at player?
 
-            //Debug.Log("Ende des Pfades erreicht?");
-            pathIsEnded = true;
-            return;
+            if (path == null)
+                return;
+            if (currentWaypoint >= path.vectorPath.Count)
+            {
+                if (pathIsEnded)
+                    return;
+
+                //Debug.Log("Ende des Pfades erreicht?");
+                pathIsEnded = true;
+                return;
+            }
+            pathIsEnded = false;
+
+            //weg zum nächsten wegpunkt
+            Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+            dir *= speed * Time.fixedDeltaTime;
+
+            //KI Bewegung
+
+            rb.AddForce(dir, fMode);
+
+            float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+            if (dist < nextWaypointDistance)
+            {
+                currentWaypoint++;
+                return;
+            }
         }
-        pathIsEnded = false;
-
-        //weg zum nächsten wegpunkt
-        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        dir *= speed * Time.fixedDeltaTime;
-
-        //KI Bewegung
-
-        rb.AddForce(dir, fMode);
-
-        float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
-        if (dist < nextWaypointDistance)
-        {
-            currentWaypoint++;
-            return;
-        }
-        
 
     }
-
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.name == "BarriereRight")
+        {
+            awake = true;
+        }
+    }
 }

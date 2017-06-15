@@ -22,7 +22,6 @@ public class EnemyShoot : MonoBehaviour {
         if (reloaded)
         {
             StartCoroutine(Reloading(shootSpeed));
-
             gameObject.GetComponent<EnemyBulletManager>().InstantiateBullet();
         }
 
@@ -30,7 +29,7 @@ public class EnemyShoot : MonoBehaviour {
     IEnumerator Reloading(float time)
     {
         reloaded = false;
-        //time = Random.Range(1f, 10f);
+        time = Random.Range(1f, 4f);
         yield return new WaitForSeconds(time);
         reloaded = true;
     }
