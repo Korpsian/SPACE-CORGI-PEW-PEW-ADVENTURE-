@@ -6,6 +6,7 @@ public class BulletScript : MonoBehaviour {
     public float speed = 0;
     public int damage = 1;
 
+
     //Jo lass da wird für Animationen gebraucht boiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
     void Start()
     {

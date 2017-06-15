@@ -7,14 +7,22 @@ public class EnemyShoot : MonoBehaviour {
     bool reloaded = true;
     public float shootSpeed = 0;
 
-	// Update is called once per frame
-	void FixedUpdate () {
+    Animator anim;
+
+    private void Start()
+    {
+        anim = gameObject.GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate () {
         Shoot();
 	}
     void Shoot()
     {
         if (reloaded)
         {
+            anim.Play("BadCat_Feuern");
             StartCoroutine(Reloading(shootSpeed));
             gameObject.GetComponent<EnemyBulletManager>().InstantiateBullet();
         }

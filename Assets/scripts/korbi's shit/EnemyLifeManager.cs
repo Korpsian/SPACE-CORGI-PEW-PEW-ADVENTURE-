@@ -26,14 +26,20 @@ public class EnemyLifeManager : MonoBehaviour {
             {
                 if (Random.Range(grndMin, grndMax) <= 6)
                 {
-                    Instantiate(health, gameObject.transform.position, Quaternion.identity);
+                    if(health != null)
+                    {
+                        Instantiate(health, gameObject.transform.position, Quaternion.identity);
+                    }
                 }
                 else
                 {
-                    Instantiate(item, gameObject.transform.position, Quaternion.identity);
+                    if(item != null)
+                    {
+                        Instantiate(item, gameObject.transform.position, Quaternion.identity);
+                    }
                 }
             }
-
+            
             Destroy(gameObject);
         }
 	}
